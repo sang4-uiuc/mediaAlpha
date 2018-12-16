@@ -9,7 +9,7 @@
 #     20+: any characters desired
 
 # You can test out any passwords here
-$password = '123asfasx@cDvz';
+$password = '1234567890123456a@A';
 
 # This runs the check_password function with the argument above
 check_password($password);
@@ -22,19 +22,19 @@ sub check_password{
     if($len < 8) {
         print "Invalid";
     } elsif($len < 12) { # if length is less than 12, then the mixed case, numbers, and symbols tests are ran
-        if (check_mixed_case($str) && check_numbers($str) && check_symbol($str)) {
+        if ($str =~ /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])/) {
             print "Valid";
         } else {
             print "Invalid";
         }
     } elsif($len < 16){ # if length is less than 16, then mixed case and numbers tests are ran
-        if (check_mixed_case($str) && check_numbers($str)) {
+        if ($str =~ /(?=.*?[a-z])(?=.*?[A-Z])(?=.*[0-9])/) {
             print "Valid";
         } else {
             print "Invalid";
         }
     } elsif($len < 20){ # if length is less than 20, then only mixed case test is ran
-        if (check_mixed_case($str)) {
+        if ($str =~ /(?=.*?[a-z])(?=.*?[A-Z])/) {
             print "Valid";
         } else {
             print "Invalid";
@@ -46,32 +46,32 @@ sub check_password{
 }
 
 # symbol test
-sub check_symbol {
-    $str = $_[0];
-    if ($str =~ /[^a-zA-z0-9]/) {
-        return 1;
-    } else {
-        return 0;
-    }
-}
+# sub check_symbol {
+#     $str = $_[0];
+#     if ($str =~ /[^a-zA-z0-9]/) {
+#         return 1;
+#     } else {
+#         return 0;
+#     }
+# }
 
 # mixed case test
-sub check_mixed_case {
-    $str = $_[0];
-    if ($str =~ /[a-z]/ && $str =~ /[A-Z]/) {
-        return 1;
-    } else {
-        return 0;
-    }
-}
+# sub check_mixed_case {
+#     $str = $_[0];
+#     if ($str =~ /[a-z]/ && $str =~ /[A-Z]/) {
+#         return 1;
+#     } else {
+#         return 0;
+#     }
+# }
 
 # numbers test
-sub check_numbers {
-    $str = $_[0];
-    if ($str =~ /[0-9]/) {
-        return 1;
-    } else {
-        return 0;
-    }
-}
+# sub check_numbers {
+#     $str = $_[0];
+#     if ($str =~ /[0-9]/) {
+#         return 1;
+#     } else {
+#         return 0;
+#     }
+# }
 
