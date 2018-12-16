@@ -7,9 +7,10 @@ def ifRedundant(left, right, start, end, s, redun):
         redun.append(end)
         return
     else:
+        # print("left", left)
+        # print("right", right)
         if left is None:
             left = "empty"
-            left
         if right is None:
             right = "empty"
         x = findLowest(start, end, s)
@@ -20,6 +21,10 @@ def ifRedundant(left, right, start, end, s, redun):
         # special case where the paranthesis are both necessary when there's subtraction before and inside the paranthesis
         if left == "-" and (s[x] == '-' or s[x] == '+'):
             return
+        # another special case where the paranthesis are necessary when a division is preceding
+        if left == "/" and (s[x] == '*' or s[x] == '/'):
+            return
+        # if the lowest operator inside is ranked lower than the left or right operator, then the paranthesis isn't redundant
         if ops[s[x]] < ops[left] or ops[s[x]] < ops[right]:
             return
         else:
@@ -47,8 +52,10 @@ def findLowest(start, end, s):
 # finds the first operator to the left of the starting paranthesis
 def findLeft(index, s):
     left = None
-    for i in range(index, -1, -1):
-        if s[i] in ops:
+    for i in range(index-1, -1, -1):
+        if s[i] == "(":
+            return left
+        elif s[i] in ops:
             left = s[i]
             break
     return left
@@ -56,8 +63,10 @@ def findLeft(index, s):
 # finds the first operator to the right of the ending paranthesis
 def findRight(index, s):
     right = None
-    for i in range(index, len(s)):
-        if s[i] in ops:
+    for i in range(index+1, len(s)):
+        if s[i] == ")":
+            return right
+        elif s[i] in ops:
             right = s[i]
             break
     return right
